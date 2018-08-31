@@ -8,10 +8,6 @@ import UserListContainer from '../containers/UserListContainer';
 const App = () => (
     <div>
         <Intro />
-        <Mode mode={1} group={1}>
-            <PersonFinderContainer />
-        </Mode>
-        <UserListContainer />
     </div>
 );
 
