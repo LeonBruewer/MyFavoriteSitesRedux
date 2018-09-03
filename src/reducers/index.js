@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import userList from './userList';
 import fetchData from './fetchData';
+import siteList from './siteList';
 
 export default combineReducers({
-    userList,
-    fetchData
+    fetchData,
+    siteList
 });

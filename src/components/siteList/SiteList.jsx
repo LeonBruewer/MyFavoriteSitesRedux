@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchBar from '../searchBar/SearchBar';
 import ListItem from '../listItem/ListItem';
-import fetchSiteList from '../../utils/FetchData';
+//import fetchSiteList from '../../utils/FetchData';
 import ShowMore from '../showMore/ShowMore';
 
 export default class SiteList extends React.Component {
@@ -25,7 +25,7 @@ export default class SiteList extends React.Component {
     createList = (searchTerm, skip) => {
         this.searchTerm = searchTerm;
 
-        fetchSiteList(searchTerm, this.sitesPerFetch, skip).then((d) => {
+        /* fetchSiteList(searchTerm, this.sitesPerFetch, skip).then((d) => {
             let {data, allowShowMore} = d;
             this.showMoreStyleDisplay = allowShowMore === true ? 'block' : 'none';
 
@@ -48,7 +48,7 @@ export default class SiteList extends React.Component {
         }).catch((ex) => {
             this.setState({list: 'Keine Ergebnisse gefunden.'});
             chayns.hideWaitCursor();
-        });
+        }); */
     }
 
     createListItems = (title, id) => (
