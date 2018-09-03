@@ -1,10 +1,13 @@
 import React from 'react';
+import {connect} from 'react-redux';
+
+import { createList, clearList } from '../../actions/siteList';
 import SearchBar from '../searchBar/SearchBar';
 import ListItem from '../listItem/ListItem';
-//import fetchSiteList from '../../utils/FetchData';
+import fetchSiteList from '../../utils/FetchData';
 import ShowMore from '../showMore/ShowMore';
 
-export default class SiteList extends React.Component {
+class SiteList extends React.Component {
     constructor (props) {
         super(props);
         this.sitesPerFetch = 20;
@@ -16,6 +19,8 @@ export default class SiteList extends React.Component {
         };
         
         this.createList = this.createList.bind(this);
+
+        this.createList('Hallo', 0);
     }
 
     showMore = () => {
@@ -24,16 +29,20 @@ export default class SiteList extends React.Component {
 
     createList = (searchTerm, skip) => {
         this.searchTerm = searchTerm;
+        
 
-        /* fetchSiteList(searchTerm, this.sitesPerFetch, skip).then((d) => {
+         fetchSiteList(searchTerm, this.sitesPerFetch, skip).then((d) => {
             let {data, allowShowMore} = d;
+            
+            this.props.createList(data);
+            console.log(this.props.list.map( (d) => this.createListItems(d.appstoreName, d.siteId)));
             this.showMoreStyleDisplay = allowShowMore === true ? 'block' : 'none';
 
             this.displayedSites = skip + data.length;
 
             let elementList = this.state.list;
             if (skip === 0) {
-                elementList = data.map( (d) => this.createListItems(d.appstoreName, d.siteId));
+                elementList = this.props.listData.map( (d) => this.createListItems(d.appstoreName, d.siteId));
             }
         
             if (skip > 0){
@@ -43,12 +52,12 @@ export default class SiteList extends React.Component {
                 elementList = oldList.concat(newList);
             }
 
-            this.setState({list: elementList, showMoreStyleDisplay: this.showMoreStyleDisplay});
+            this.list = elementList;
             
         }).catch((ex) => {
-            this.setState({list: 'Keine Ergebnisse gefunden.'});
-            chayns.hideWaitCursor();
-        }); */
+            //this.setState({list: 'Keine Ergebnisse gefunden.'});
+            //chayns.hideWaitCursor();
+        }); 
     }
 
     createListItems = (title, id) => (
@@ -72,7 +81,7 @@ export default class SiteList extends React.Component {
             <div className="accordion__body">
                 <div className="accordion__content">
                     <div id="siteList">
-                        {this.state.list}
+                        {this.props.listData.map( (d) => this.createListItems(d.appstoreName, d.siteId))}
                         <ShowMore
                             display={this.state.showMoreStyleDisplay}
                             onClick={this.showMore}
@@ -83,3 +92,18 @@ export default class SiteList extends React.Component {
         </div>
     );
 }
+
+const mapStateToProps = state => {
+    return {
+        listData: state.siteList.listData
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        createList: (data) => dispatch(createList(data)),
+        clearList: () => dispatch(clearList())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SiteList)

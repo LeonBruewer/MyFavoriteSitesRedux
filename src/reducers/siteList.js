@@ -1,24 +1,19 @@
 import { CREATE_LIST, CLEAR_LIST } from '../actions/siteList';
 
-const initialState = {};
+const initialState = {
+    listData: [{
+        title: 'Keine Ergebnisse gefunden'
+    }]
+};
 
 const siteList = (state = initialState, action) => {
     switch (action.type) {
         case CREATE_LIST:
-            let list =  action.data.map( (d) =>
-            <ListItem
-                title={d.appstoreName}
-                description={d.siteId}
-                key={d.siteId}
-            />);
-
             return {
-                list
+                listData: action.data
             }
         case CLEAR_LIST:
-            return {
-                list: <p>Keine Ergebnisse</p>
-            };
+            return initialState;
         default:
             return state;
     }
