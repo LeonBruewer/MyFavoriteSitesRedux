@@ -6,6 +6,7 @@ import SearchBar from '../searchBar/SearchBar';
 import ListItem from '../listItem/ListItem';
 import {fetchSiteList} from '../../utils/FetchData';
 import ShowMore from '../showMore/ShowMore';
+import { showButton, hideButton } from '../../actions/showMoreButton';
 
 class SiteList extends React.Component {
     constructor (props) {
@@ -19,20 +20,23 @@ class SiteList extends React.Component {
     }
 
     showMore = () => {
-        this.createList(this.searchTerm, this.displayedSites);
+        this.createList(this.displayedSites);
     }
 
     createList = (skip) => {
         this.searchTerm = this.props.searchTerm;
         console.log(this.props.listData);
+        let actions = {
+            dispatchSaveData: this.props.saveData,
+            dispatchShowButton: this.props.showButton,
+            dispatchHideButton: this.props.hideButton
+        }
         
 
-         fetchSiteList(this.searchTerm, this.sitesPerFetch, skip).then((d) => {
-            let {data, allowShowMore} = d;
-            
+         fetchSiteList(this.searchTerm, this.sitesPerFetch, skip, actions).then(() => {
+            let data = this.props.data;
             this.props.createList(data);
             //console.log(this.props.list.map( (d) => this.createListItems(d.appstoreName, d.siteId)));
-            this.showMoreStyleDisplay = allowShowMore === true ? 'block' : 'none';
             this.displayedSites = skip + data.length;
 
             let elementList = this.state.list;
@@ -92,14 +96,18 @@ const mapStateToProps = state => {
     return {
         listData: state.siteList.listData,
         searchTerm : state.searchBar.term,
-        showMoreStyleDisplay: state.showMoreButton.displayStyle
+        showMoreStyleDisplay: state.showMoreButton.displayStyle,
+        data: state.fetchData.data
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         createList: (data) => dispatch(createList(data)),
-        clearList: () => dispatch(clearList())
+        clearList: () => dispatch(clearList()),
+        saveData: (saveData, data) => dispatch(saveData(data)),
+        showButton: () => dispatch(showButton()),
+        hideButton: () => dispatch(hideButton())
     }
 }
 
