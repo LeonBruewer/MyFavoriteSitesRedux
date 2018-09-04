@@ -7,8 +7,7 @@ const Intro = () => (
             {HEADLINE}
         </h1>
         <p>
-            {DESCRIPTION}
-        </p>
+        Hier findest du alle deine lieblings Chayns Sites. Wenn du deine eigene Seite hinzufügen möchtest, kannst du sie <a href="#">hier beantragen.</a>        </p>
     </div>
 );
 
