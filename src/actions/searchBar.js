@@ -4,5 +4,5 @@ export const setSearchterm = (term) => {
     return {
         type: SET_SEARCHTERM,
         term
-    }
+    };
 }
