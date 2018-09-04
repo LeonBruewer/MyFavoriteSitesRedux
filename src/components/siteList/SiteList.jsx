@@ -23,7 +23,7 @@ class SiteList extends React.Component {
 
     createList = (skip) => {
         this.searchTerm = this.props.searchTerm;
-        console.log(this.props.listData);
+        
         let actions = {
             dispatchSaveData: this.props.saveData,
             dispatchShowButton: this.props.showButton,
@@ -44,7 +44,6 @@ class SiteList extends React.Component {
             this.props.clearList();
             this.props.hideButton();
             chayns.hideWaitCursor();
-            console.log(`siteList error: ${ex}`);
         }); 
     }
 

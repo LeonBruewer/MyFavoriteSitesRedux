@@ -10,8 +10,6 @@ const propTypes = {
 class AddSite extends React.Component {
     constructor(props) {
         super(props);
-
-        console.log(this.props);
     }
 
     onInputChange = (e) => {

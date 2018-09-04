@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { HEADLINE, DESCRIPTION } from '../../constants/text';
+import { HEADLINE } from '../../constants/text';
 import { switchAccordions, defaultAccordions } from '../../actions/accordions';
 
 const Intro = (props) => (
