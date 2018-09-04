@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import { createList, clearList } from '../../actions/siteList';
+import { createList, appendList, clearList } from '../../actions/siteList';
 import SearchBar from '../searchBar/SearchBar';
 import ListItem from '../listItem/ListItem';
 import {fetchSiteList} from '../../utils/FetchData';
@@ -13,10 +13,8 @@ class SiteList extends React.Component {
         super(props);
         this.sitesPerFetch = 20;
         this.displayedSites = 0;
-        this.showMoreStyleDisplay = 'none';
 
         this.createList = this.createList.bind(this);
-        
     }
 
     showMore = () => {
@@ -32,40 +30,36 @@ class SiteList extends React.Component {
             dispatchHideButton: this.props.hideButton
         }
         
-
          fetchSiteList(this.searchTerm, this.sitesPerFetch, skip, actions).then(() => {
             let data = this.props.data;
-            this.props.createList(data);
-            //console.log(this.props.list.map( (d) => this.createListItems(d.appstoreName, d.siteId)));
             this.displayedSites = skip + data.length;
-
-            let elementList = this.state.list;
+            
             if (skip === 0) {
-                elementList = this.props.listData.map( (d) => this.createListItems(d.appstoreName, d.siteId));
+                this.props.createList(data);
+            } else {
+                this.props.appendList(data);
             }
-        
-            if (skip > 0) {
-                let oldList = this.state.list;
-                let newList = data.map( (d) => this.createListItems(d.appstoreName, d.siteId));
-                elementList = oldList.concat(newList);
-            }
-
-            this.list = elementList;
             
         }).catch((ex) => {
-            //this.setState({list: 'Keine Ergebnisse gefunden.'});
-            //chayns.hideWaitCursor();
+            this.props.clearList();
+            this.props.hideButton();
+            chayns.hideWaitCursor();
             console.log(`siteList error: ${ex}`);
         }); 
     }
 
-    createListItems = (title, id) => (
-        <ListItem
-            title={title}
-            description={id}
-            key={id}
-        />
-    );
+    createListItems = (title, id) => {
+        if (id) {
+        return (
+            <ListItem
+                title={title}
+                description={id}
+                key={id}
+            />
+        );}
+        else
+        return <p>{title}</p>
+    }
 
     render = () =>
     (
@@ -104,6 +98,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         createList: (data) => dispatch(createList(data)),
+        appendList: (data) => dispatch(appendList(data)),
         clearList: () => dispatch(clearList()),
         saveData: (saveData, data) => dispatch(saveData(data)),
         showButton: () => dispatch(showButton()),

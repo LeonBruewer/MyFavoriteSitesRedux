@@ -2,7 +2,7 @@ import { CREATE_LIST, APPEND_LIST, CLEAR_LIST } from '../actions/siteList';
 
 const initialState = {
     listData: [{
-        title: 'Keine Ergebnisse gefunden'
+        appstoreName: 'Keine Ergebnisse gefunden'
     }]
 };
 
