@@ -1,4 +1,4 @@
-import { SWITCH_ACCORDIONS } from '../actions/accordions';
+import { SWITCH_ACCORDIONS, DEFAULT_ACCORDIONS } from '../actions/accordions';
 
 const initialState = {
     sitesClass: 'accordion accordion--open',
@@ -12,8 +12,10 @@ const accordions = (state = initialState, action) => {
                 sitesClass: 'accordion',
                 formClass: 'accordion accordion--open'
             }
-        default:
+        case DEFAULT_ACCORDIONS:
             return initialState;
+        default:
+            return state;
     }
 }
 

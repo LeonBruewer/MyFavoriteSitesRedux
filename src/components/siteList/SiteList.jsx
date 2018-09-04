@@ -63,7 +63,7 @@ class SiteList extends React.Component {
 
     render = () =>
     (
-        <div className="accordion accordion--open" data-group="mfs" id="sitesAccordion">
+        <div className={this.props.accordionClass} data-group="mfs" id="sitesAccordion">
             <div className="accordion__head accordion__head--search">
                 Sites
                 <SearchBar
@@ -91,7 +91,8 @@ const mapStateToProps = state => {
         listData: state.siteList.listData,
         searchTerm : state.searchBar.term,
         showMoreStyleDisplay: state.showMoreButton.displayStyle,
-        data: state.fetchData.data
+        data: state.fetchData.data,
+        accordionClass: state.accordions.sitesClass
     }
 }
 

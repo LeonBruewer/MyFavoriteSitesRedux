@@ -59,7 +59,7 @@ class AddSite extends React.Component {
     }
 
     render = () =>
-    (<div className="accordion" data-group="mfs" id="addSite">
+    (<div className={this.props.accordions.formClass} data-group="mfs" id="addSite">
     <div className="accordion__head">{this.props.title}<p className="badge right"><i className="fa fa-plus "></i></p></div>
     <div className="accordion__body">
         <div className="accordion__content">
