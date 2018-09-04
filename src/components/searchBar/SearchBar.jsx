@@ -1,15 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './AccordionSearchBar.scss';
+
+import setSearchterm from '../../actions/searchBar';
 
 class SearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.timeout;
         this.default = this.props.default;
-        this.state = {
-            value: '',
-            searchTerm: ''
-        };
 
         this.onChangeAction = props.action;
         this.onChangeAction(this.default, 0);
@@ -20,8 +19,8 @@ class SearchBar extends React.Component {
 
         clearTimeout(this.timeout);
         this.timeout = setTimeout( () => {
-            this.setState({searchTerm: newValue});
-            let searchTerm = this.state.searchTerm !== '' ? this.state.searchTerm : this.default;
+            let searchTerm = value !== '' ? value : this.default;
+            this.props.setSearchterm(searchTerm);
 
             this.onChangeAction(searchTerm, 0);
         }, 500);
@@ -39,7 +38,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    
+    return {
+        setSearchterm: (term) => dispatch(term)
+    }
 }
 
-export default SearchBar;
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

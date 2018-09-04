@@ -1,8 +1,8 @@
-export const GET_SEARCHTERM = 'GET_SEARCHTERM';
+export const SET_SEARCHTERM = 'SET_SEARCHTERM';
 
-export const createList = (term) => {
+export const setSearchterm = (term) => {
     return {
-        type: GET_SEARCHTERM,
+        type: SET_SEARCHTERM,
         term
     }
 }

@@ -1,4 +1,4 @@
-import { GET_SEARCHTERM } from '../actions/searchBar';
+import { SET_SEARCHTERM } from '../actions/searchBar';
 
 const initialState = {
     term: ''
@@ -6,7 +6,7 @@ const initialState = {
 
 const siteList = (state = initialState, action) => {
     switch (action.type) {
-        case GET_SEARCHTERM:
+        case SET_SEARCHTERM:
             return {
                 term: action.term
             }
