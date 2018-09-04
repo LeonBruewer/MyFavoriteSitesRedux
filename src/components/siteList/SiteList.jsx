@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import { createList, clearList } from '../../actions/siteList';
 import SearchBar from '../searchBar/SearchBar';
 import ListItem from '../listItem/ListItem';
-import fetchSiteList from '../../utils/FetchData';
+import {fetchSiteList} from '../../utils/FetchData';
 import ShowMore from '../showMore/ShowMore';
 
 class SiteList extends React.Component {
@@ -15,6 +15,7 @@ class SiteList extends React.Component {
         this.showMoreStyleDisplay = 'none';
 
         this.createList = this.createList.bind(this);
+        
     }
 
     showMore = () => {
@@ -77,7 +78,7 @@ class SiteList extends React.Component {
                     <div id="siteList">
                         {this.props.listData.map( (d) => this.createListItems(d.appstoreName, d.siteId))}
                         <ShowMore
-                            display={this.showMoreStyleDisplay}
+                            display={this.props.showMoreStyleDisplay}
                             onClick={this.showMore}
                         />
                     </div>
@@ -90,7 +91,8 @@ class SiteList extends React.Component {
 const mapStateToProps = state => {
     return {
         listData: state.siteList.listData,
-        searchTerm : state.searchBar.term
+        searchTerm : state.searchBar.term,
+        showMoreStyleDisplay: state.showMoreButton.displayStyle
     }
 }
 

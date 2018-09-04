@@ -4,7 +4,7 @@ const initialState = {
     displayStyle : 'none'
 };
 
-const showMoreButton = (state = initialState) => {
+const showMoreButton = (state = initialState, action) => {
     switch (action.type) {
         case SHOW_BUTTON:
             return {
