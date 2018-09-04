@@ -14,30 +14,24 @@ class SiteList extends React.Component {
         this.displayedSites = 0;
         this.showMoreStyleDisplay = 'none';
 
-        this.state = {
-            showMoreStyleDisplay: 'none'
-        };
-        
         this.createList = this.createList.bind(this);
-
-        this.createList('Hallo', 0);
     }
 
     showMore = () => {
         this.createList(this.searchTerm, this.displayedSites);
     }
 
-    createList = (searchTerm, skip) => {
-        this.searchTerm = searchTerm;
+    createList = (skip) => {
+        this.searchTerm = this.props.searchTerm;
+        console.log(this.props.listData);
         
 
-         fetchSiteList(searchTerm, this.sitesPerFetch, skip).then((d) => {
+         fetchSiteList(this.searchTerm, this.sitesPerFetch, skip).then((d) => {
             let {data, allowShowMore} = d;
             
             this.props.createList(data);
-            console.log(this.props.list.map( (d) => this.createListItems(d.appstoreName, d.siteId)));
+            //console.log(this.props.list.map( (d) => this.createListItems(d.appstoreName, d.siteId)));
             this.showMoreStyleDisplay = allowShowMore === true ? 'block' : 'none';
-
             this.displayedSites = skip + data.length;
 
             let elementList = this.state.list;
@@ -45,8 +39,7 @@ class SiteList extends React.Component {
                 elementList = this.props.listData.map( (d) => this.createListItems(d.appstoreName, d.siteId));
             }
         
-            if (skip > 0){
-                
+            if (skip > 0) {
                 let oldList = this.state.list;
                 let newList = data.map( (d) => this.createListItems(d.appstoreName, d.siteId));
                 elementList = oldList.concat(newList);
@@ -57,6 +50,7 @@ class SiteList extends React.Component {
         }).catch((ex) => {
             //this.setState({list: 'Keine Ergebnisse gefunden.'});
             //chayns.hideWaitCursor();
+            console.log(`siteList error: ${ex}`);
         }); 
     }
 
@@ -83,7 +77,7 @@ class SiteList extends React.Component {
                     <div id="siteList">
                         {this.props.listData.map( (d) => this.createListItems(d.appstoreName, d.siteId))}
                         <ShowMore
-                            display={this.state.showMoreStyleDisplay}
+                            display={this.showMoreStyleDisplay}
                             onClick={this.showMore}
                         />
                     </div>
@@ -95,7 +89,8 @@ class SiteList extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        listData: state.siteList.listData
+        listData: state.siteList.listData,
+        searchTerm : state.searchBar.term
     }
 }
 
