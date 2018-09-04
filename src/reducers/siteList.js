@@ -1,8 +1,8 @@
-import { CREATE_LIST, CLEAR_LIST } from '../actions/siteList';
+import { CREATE_LIST, APPEND_LIST, CLEAR_LIST } from '../actions/siteList';
 
 const initialState = {
     listData: [{
-        title: 'Keine Ergebnisse gefunden'
+        appstoreName: 'Keine Ergebnisse gefunden'
     }]
 };
 
@@ -11,6 +11,14 @@ const siteList = (state = initialState, action) => {
         case CREATE_LIST:
             return {
                 listData: action.data
+            }
+        case APPEND_LIST:
+            let oldData = state.listData;
+            let newData = action.data;
+            let fullData = oldData.concat(newData);
+
+            return {
+                listData: fullData
             }
         case CLEAR_LIST:
             return initialState;
