@@ -4,13 +4,13 @@ import { Mode } from 'chayns-components';
 import Intro from './intro/Intro';
 import PersonFinderContainer from '../containers/PersonFinderContainer';
 import UserListContainer from '../containers/UserListContainer';
-//import SiteList from './siteList/SiteList';
+import SiteList from './siteList/SiteList';
 
 const App = () => (
     <div>
         <Intro />
         <div className="tapp__content">
-            
+            <SiteList />
         </div>
     </div>
 );
