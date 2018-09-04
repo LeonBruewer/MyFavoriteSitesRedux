@@ -1,7 +1,7 @@
 import React from 'react';
 import './AccordionSearchBar.scss';
 
-export default class SearchBar extends React.Component {
+class SearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.timeout;
@@ -16,8 +16,7 @@ export default class SearchBar extends React.Component {
     }
 
     onInputChange = (e) => {
-        let newValue = e.target.value;
-        this.setState({value: newValue});
+        let value = e.target.value;
 
         clearTimeout(this.timeout);
         this.timeout = setTimeout( () => {
@@ -30,7 +29,17 @@ export default class SearchBar extends React.Component {
 
     render = () =>
     <div id="searchBar" className="Suche Suche--accordion">
-        <input id="searchBar--searchTerm" type="text" placeholder="Suche" onChange={this.onInputChange} value={this.state.value} />
+        <input id="searchBar--searchTerm" type="text" placeholder="Suche" onChange={this.onInputChange} />
         <label><i className="fa fa-search"></i></label>
     </div>;
 }
+
+const mapStateToProps = (state) => {
+    return state;
+}
+
+const mapDispatchToProps = (dispatch) => {
+    
+}
+
+export default SearchBar;
